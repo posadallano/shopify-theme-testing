@@ -1,0 +1,76 @@
+<section class="bestseller">
+    <div class="bestseller__content">
+      <div class="bestseller__box content-container center">
+        {%- for block in section.blocks -%}
+            {% case block.type %}
+                {%- when 'heading' -%}
+                <h2 class="bestseller__heading h2">
+                    {{ block.settings.heading | escape }}
+                </h2>
+                {%- when 'text' -%}
+                    <h3 class="bestseller__subheading h3">
+                      {{ block.settings.subheading }}
+                    </h3>
+            {%- endcase -%}
+        {%- endfor -%}
+
+        <div class="bestseller__grid page-width">
+          <ul id="product-grid" data-id="" class="grid product-grid grid--2-col-tablet-down grid--4-col-desktop">
+            {% for product in collections.best-selling.products limit: 4 %}
+              <li class="grid__item">
+                {% render 'card-product', card_product: product %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% schema %} 
+{
+    "name": "Best Seller",
+    "class": "section",
+   "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Heading",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "subheading",
+          "default": "Subheading",
+          "label": "Subheading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Seller",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+} 
+{% endschema %}

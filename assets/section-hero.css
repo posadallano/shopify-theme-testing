@@ -1,0 +1,39 @@
+.hero {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    min-height: 500px;
+}
+
+.hero__box {
+    text-align: center;
+}
+
+.hero__image {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.hero__content {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    display: flex;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.hero__box {
+    padding: 35px;
+    position: relative;
+    height: fit-content;
+    width: auto;
+    max-width: 650px;
+    z-index: 1;
+}

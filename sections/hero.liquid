@@ -1,0 +1,124 @@
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="hero">
+    <div class="hero__image media">
+      {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 1920 }}">
+      {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </div>
+    <div class="hero__content">
+      <div class="hero__box content-container gradient">
+        {%- for block in section.blocks -%}
+            {% case block.type %}
+                {%- when 'heading' -%}
+                <h2 class="hero__heading h2">
+                    {{ block.settings.heading | escape }}
+                </h2>
+                {%- when 'text' -%}
+                    <div class="hero__text body">
+                      {{ block.settings.text }}
+                    </div>
+                {%- when 'button' -%}
+                    {%- if block.settings.button_label != blank -%}
+                    <div class="hero__button">
+                      <a
+                          {% if block.settings.button_link == blank %} 
+                              role="link" aria-disabled="true"
+                          {% else %} 
+                              href="{{ block.settings.button_link }}"
+                          {% endif %} 
+                          class="button
+                          {% if block.settings.button_style_secondary %} 
+                              button--secondary
+                          {% else %} 
+                              button--primary
+                          {% endif %}"
+                          >
+                          {{ block.settings.button_label | escape }}
+                      </a>
+                    </div>
+                    {%- endif -%}
+            {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+{% schema %} 
+{
+    "name": "Hero",
+    "class": "section",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        }
+   ],
+   "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Some text here",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Nulla porttitor accumsan tincidunt. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "Shop now",
+          "label": "Button label",
+          "info": "Leave the label blank to hide the button."
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+} 
+{% endschema %}
